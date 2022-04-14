@@ -1,13 +1,15 @@
 import pytorch_lightning as pl
 import torch.utils.data
 from pytorch_lightning.utilities.cli import LightningCLI
-
+from torch import nn
 from x_clip import CLIP
 
 
 class CLIPModule(pl.LightningModule):
     def __init__(
             self,
+            image_encoder: nn.Module = None,
+            text_encoder: nn.Module = None,
             dim_text=512,
             dim_image=512,
             dim_latent=512,
@@ -34,6 +36,8 @@ class CLIPModule(pl.LightningModule):
         self.freeze_image_encoder = freeze_image_encoder
         self.save_hyperparameters()
         self.clip = CLIP(
+            image_encoder=image_encoder,
+            text_encoder=text_encoder,
             dim_text=dim_text,
             dim_image=dim_image,
             dim_latent=dim_latent,
