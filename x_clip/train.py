@@ -70,8 +70,6 @@ class CLIPModule(pl.LightningModule):
 
     def training_step(self, batch):
         texts, images = batch
-        print(texts.shape)
-        print(images.shape)
         loss = self(texts, images)
         self.log("train/loss", loss)
 
